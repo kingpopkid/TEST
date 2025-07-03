@@ -1,122 +1,90 @@
-// play2.js
-
-import ytSearch from 'yt-search';
 import '../../config.cjs';
+import ytSearch from 'yt-search';
 
-const prefix = ['.', '!', '/']; // Customize this list as you want
+const play = async (msg, sock) => {
+  const input = msg.body.trim().toLowerCase();
 
-const play2 = async (m, sock) => {
-  const text = m.body?.trim();
-  const usedPrefix = prefix.find(p => text?.startsWith(p + 'play2'));
-  if (!usedPrefix) return;
+  // Supported prefixes
+  const prefixes = ["play", "video", "mp3", "mp4", "music", "song"];
+  const matchedPrefix = prefixes.find(p => input.startsWith(p));
 
-  const query = text.slice((usedPrefix + 'play2').length).trim();
-  if (!query) return m.reply("❌ *Please provide a search query!*");
+  if (matchedPrefix) {
+    const query = input.replace(matchedPrefix, '').trim();
+    if (!query) return msg.reply("❌ *Please provide a search query!*");
 
-  await m.React('🔍');
+    await msg.React('🎧');
 
-  try {
-    const result = await ytSearch(query);
-    if (!result.videos.length) return m.reply("❌ *No results found!*");
+    try {
+      const results = await ytSearch(query);
+      if (!results.videos.length) return msg.reply("❌ *No results found!*");
 
-    const video = result.videos[0];
-    const caption = `
-╭━━━〔 *ᴘᴏᴘᴋɪᴅ-ɢʟᴇ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ* 〕━━━
+      const video = results.videos[0];
+      const caption = `
+╭━━━〔 ᴘᴏᴘᴋɪᴅ ɢʟᴇ | ᴀɪ ᴘʟᴀʏᴇʀ 〕━━━
 
 📌 *Title:* ${video.title}
 ⏱️ *Duration:* ${video.timestamp}
 👁️ *Views:* ${video.views}
-📺 *Channel:* ${video.author.name}
+🎙️ *Channel:* ${video.author.name}
 
-╰━━━━━━━━━━━━━━━━━━━━
+╰━━━━━━━━━━━━━━━━━━━━━━━
+⏬ *Preparing your file...*
+`;
 
-🎧 Reply with a number to choose format:
+      await sock.sendMessage(msg.from, {
+        image: { url: video.thumbnail },
+        caption
+      }, { quoted: msg });
 
-1️⃣ Audio  
-2️⃣ Video  
-3️⃣ Audio 📄  
-4️⃣ Video 📄  
-5️⃣ Voice Note 🎙️`;
+      const encodedUrl = encodeURIComponent(video.url);
 
-    await sock.sendMessage(m.from, {
-      image: { url: video.thumbnail },
-      caption
-    }, { quoted: m });
+      // Choose audio or video based on prefix
+      const isAudio = ["play", "mp3", "music", "song"].includes(matchedPrefix);
+      const apiList = isAudio
+        ? [
+            `https://apis.davidcyriltech.my.id/download/ytmp3?url=${encodedUrl}`,
+            `https://apis.giftedtech.web.id/api/download/dlmp3?apikey=gifted&url=${encodedUrl}`
+          ]
+        : [
+            `https://apis.giftedtech.web.id/api/download/dlmp4?apikey=gifted&url=${encodedUrl}`,
+            `https://apis.davidcyriltech.my.id/download/ytmp4?url=${encodedUrl}`,
+            `https://www.dark-yasiya-api.site/download/ytmp4?url=${encodedUrl}`,
+            `https://api.giftedtech.web.id/api/download/dlmp4?url=${encodedUrl}&apikey=gifted-md`
+          ];
 
-    global.gle_play2 = global.gle_play2 || {};
-    global.gle_play2[m.key.id] = {
-      url: video.url,
-      title: video.title
-    };
+      const fileType = isAudio ? 'audio' : 'video';
+      const mime = isAudio ? 'audio/mpeg' : 'video/mp4';
+      const successCaption = isAudio ? '🎵 *Audio ready!*' : '📽️ *Video ready!*';
 
-  } catch (err) {
-    console.error(err);
-    m.reply("❌ *An error occurred while searching.*");
-  }
-};
-
-const handlePlay2Reply = async (m, sock) => {
-  const ref = m.quoted?.key?.id;
-  if (!ref || !global.gle_play2?.[ref]) return;
-
-  const selection = m.body.trim();
-  const videoData = global.gle_play2[ref];
-  const formats = {
-    "1": { type: 'audio', mimetype: 'audio/mpeg', caption: '🎵 *Here is your audio*' },
-    "2": { type: 'video', mimetype: 'video/mp4', caption: '🎬 *Here is your video*' },
-    "3": { type: 'audioDocument', mimetype: 'audio/mpeg', caption: '📄 *Audio Doc*' },
-    "4": { type: 'videoDocument', mimetype: 'video/mp4', caption: '📄 *Video Doc*' },
-    "5": { type: 'voice', mimetype: 'audio/ogg; codecs=opus', caption: '🗣️ *Voice Note*' },
-  };
-
-  if (!formats[selection]) return m.reply("❌ *Invalid selection. Please reply with 1–5.*");
-
-  const selected = formats[selection];
-  await m.React('⏳');
-
-  const encoded = encodeURIComponent(videoData.url);
-  const sources = [
-    `https://apis.giftedtech.web.id/api/download/dlmp4?apikey=gifted&url=${encoded}`,
-    `https://apis.davidcyriltech.my.id/download/ytmp4?url=${encoded}`,
-    `https://www.dark-yasiya-api.site/download/ytmp3?url=${encoded}`,
-    `https://api.giftedtech.web.id/api/download/dlmp3?apikey=gifted&url=${encoded}`
-  ];
-
-  let fileURL = null;
-  for (const api of sources) {
-    try {
-      const res = await fetch(api);
-      const json = await res.json();
-      if (json?.result?.download_url) {
-        fileURL = json.result.download_url;
-        break;
+      let downloadLink = null;
+      for (const api of apiList) {
+        try {
+          const res = await fetch(api);
+          const data = await res.json();
+          if (data.success && data.result?.download_url) {
+            downloadLink = data.result.download_url;
+            break;
+          }
+        } catch (err) {
+          console.log(`❌ API failed: ${api}`);
+        }
       }
-    } catch (e) {
-      console.error(`API failed: ${api}`);
+
+      if (!downloadLink) return msg.reply("❌ *All Popkid servers failed. Try again later.*");
+
+      const media = {
+        [fileType]: { url: downloadLink },
+        mimetype: mime,
+        caption: successCaption
+      };
+
+      await sock.sendMessage(msg.from, media, { quoted: msg });
+
+    } catch (error) {
+      console.error("❌ Error:", error);
+      return msg.reply("⚠️ *Something went wrong while processing your request.*");
     }
   }
-
-  if (!fileURL) return m.reply("❌ *All download sources failed. Try again later.*");
-
-  const sendOpts = { quoted: m, caption: selected.caption };
-
-  if (selected.type.includes("Document")) {
-    sendOpts.document = { url: fileURL };
-    sendOpts.mimetype = selected.mimetype;
-    sendOpts.fileName = `${videoData.title}.${selected.mimetype.split("/")[1]}`;
-  } else if (selected.type === "voice") {
-    sendOpts.audio = { url: fileURL };
-    sendOpts.mimetype = selected.mimetype;
-    sendOpts.ptt = true;
-  } else {
-    sendOpts[selected.type] = { url: fileURL };
-    sendOpts.mimetype = selected.mimetype;
-  }
-
-  await sock.sendMessage(m.from, sendOpts);
-  await m.React('✅');
-
-  delete global.gle_play2[ref]; // Clean up
 };
 
-export { play2, handlePlay2Reply };
+export default play;
