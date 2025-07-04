@@ -33,158 +33,210 @@ const menu = async (m, sock) => {
     }
 
     const menuText = `
-╔════ ⬡  *POPKID-XD V2*  ⬡ ════╗
-┃ 🧠 *Developer:* Popkid KE
-┃ 🤖 *Bot Name:* Popkid-XD
-┃ ⚡ *Runtime:* ${runtime}
-┃ 🌐 *Mode:* ${mode}
-┃ 🆙 *Version:* 2.0.0
-┃ 🔧 *Prefix:* ${prefix}
-┃ 👑 *Owner:* ${ownerName}
-╚════════════════════════════╝
+╭───────────────⭓
+│ 🤖 ʙᴏᴛ : *ᴘᴏᴘᴋɪᴅ-xᴅ*
+│ ⏱️ ʀᴜɴᴛɪᴍᴇ : ${uptime}
+│ ⚡ sᴘᴇᴇᴅ : ${responseTime}s
+│ 🌐 ᴍᴏᴅᴇ : public
+│ 🧩 ᴘʀᴇғɪx : ${prefix}
+│ 👑 ᴏᴡɴᴇʀ : ᴘᴏᴘᴋɪᴅ
+│ 🛠️ ᴅᴇᴠ : *ᴘᴏᴘᴋɪᴅ*
+│ 🧪 ᴠᴇʀ : *2.0.0*
+╰───────────────⭓
+━━━━━━━━━━━━━━━━━━
+💥 *𝙒𝙀𝙇𝘾𝙊𝙈𝙀 𝙏𝙊 𝙋𝙊𝙋𝙆𝙄𝘿-𝙓𝘿* 💥
+━━━━━━━━━━━━━━━━━━
 
-╔═══ 『 *MAIN MENU* 』═══╗
-┃ ⏺️ .menu
-┃ ⏺️ .speed
-┃ ⏺️ .alive
-┃ ⏺️ .bugmenu
-┃ ⏺️ .owner
-┃ ⏺️ .allcmds
-┃ ⏺️ .addpremium
-┃ ⏺️ .repo
-┃ ⏺️ .dev
-┃ ⏺️ .ping
-┃ ⏺️ .version
-╚════════════════════════════╝
+📜 『 *𝗠𝗔𝗜𝗡 𝗠𝗘𝗡𝗨* 』
+❏ menu
+❏ bugmenu
+❏ speed
+❏ alive
+❏ sudo
+❏ addpremium
+❏ dev
+❏ allvar
+❏ ping
+❏ owner
 
-╔═══ 『 *OWNER ZONE* 』═══╗
-┃ 👑 .join
-┃ 👑 .autoread
-┃ 👑 .pair
-┃ 👑 .leave
-┃ 👑 .jid
-┃ 👑 .autoblock
-┃ 👑 .statusreply
-┃ 👑 .restart
-┃ 👑 .host
-┃ 👑 .upload
-┃ 👑 .vv
-┃ 👑 .alwaysonline
-┃ 👑 .block
-┃ 👑 .unblock
-┃ 👑 .setstatusmsg
-┃ 👑 .setprefix
-┃ 👑 .setownername
-╚════════════════════════════╝
+👑 『 *𝗢𝗪𝗡𝗘𝗥 𝗖𝗢𝗠𝗠𝗔𝗡𝗗𝗦* 』
+❏ join
+❏ autoread
+❏ pair
+❏ leave
+❏ autostatusview
+❏ autotyping
+❏ autoblock
+❏ autorecording
+❏ autosticker
+❏ antisticker
+❏ restart
+❏ block
+❏ unblock
+❏ anticall
+❏ antidelete
+❏ upload
+❏ vv
+❏ setstatusmsg
+❏ allcmds
+❏ calculater
+❏ alwaysonline
+❏ delete
+❏ vv2
+❏ setprefix
+❏ setownername
+❏ profile
+❏ repo
 
-╔═══ 『 *AI SECTION* 』═══╗
-┃ 🤖 .ai
-┃ 🤖 .gpt
-┃ 🤖 .lydia
-┃ 🤖 .gemini
-┃ 🤖 .chatbot
-╚════════════════════════════╝
+🧠 『 *𝗔𝗜 & 𝗖𝗛𝗔𝗧* 』
+❏ ai
+❏ bug
+❏ bot
+❏ report
+❏ gemini
+❏ chatbot
+❏ gpt
+❏ lydia
+❏ popkid-ai
 
-╔══ 『 *CONVERTERS* 』══╗
-┃ 🎨 .attp
-┃ 🎨 .sticker
-┃ 🎨 .take
-┃ 🎨 .mp3
-┃ 🎨 .ss
-┃ 🎨 .shorten
-╚════════════════════════════╝
+🎨 『 *𝗖𝗢𝗡𝗩𝗘𝗥𝗧𝗘𝗥𝗦* 』
+❏ attp
+❏ gimage
+❏ mp3
+❏ ss
+❏ fancy
+❏ url
+❏ url2
+❏ shorten
+❏ sticker
+❏ take
 
-╔══ 『 *SEARCH ENGINE* 』══╗
-┃ 🔍 .play
-┃ 🔍 .video
-┃ 🔍 .song
-┃ 🔍 .ytsearch
-┃ 🔍 .mediafire
-┃ 🔍 .facebook
-┃ 🔍 .instagram
-┃ 🔍 .tiktok
-┃ 🔍 .githubstalk
-┃ 🔍 .lyrics
-┃ 🔍 .app
-┃ 🔍 .pinterest
-┃ 🔍 .imdb
-┃ 🔍 .ipstalk
-╚════════════════════════════╝
+🔍 『 *𝗦𝗘𝗔𝗥𝗖𝗛 & 𝗧𝗢𝗢𝗟𝗦* 』
+❏ google
+❏ mediafire
+❏ quranvideo
+❏ quraimage
+❏ facebook
+❏ instagram
+❏ tiktok
+❏ lyrics
+❏ ytsearch
+❏ app
+❏ bing
+❏ ipstalk
+❏ imdb
+❏ pinterest
+❏ githubstalk
+❏ image
+❏ ringtone
+❏ playstore
+❏ shazam
 
-╔══ 『 *GROUP CONTROLS* 』══╗
-┃ 👥 .kickall
-┃ 👥 .remove
-┃ 👥 .tagall
-┃ 👥 .hidetag
-┃ 👥 .group open
-┃ 👥 .group close
-┃ 👥 .add
-┃ 👥 .vcf
-┃ 👥 .left
-┃ 👥 .promoteall
-┃ 👥 .demoteall
-┃ 👥 .setdescription
-┃ 👥 .linkgc
-┃ 👥 .antilink
-┃ 👥 .antisticker
-┃ 👥 .antispam
-┃ 👥 .create
-┃ 👥 .setname
-┃ 👥 .promote
-┃ 👥 .demote
-┃ 👥 .groupinfo
-┃ 👥 .balance
-╚════════════════════════════╝
+🎮 『 *𝗙𝗨𝗡 & 𝗚𝗔𝗠𝗘𝗦* 』
+❏ getpp
+❏ avatar
+❏ wcg
+❏ joke
+❏ ttt
+❏ yesorno
+❏ connect4
+❏ rank
+❏ quizz
+❏ movie
+❏ flirt
+❏ givetext
+❏ roast
+❏ anime
+❏ profile
+❏ ebinary
+❏ fetch
+❏ qc
+❏ couple
+❏ poll
+❏ score
+❏ toqr
+❏ tempmail
 
-╔══ 『 *AUDIO EFFECTS* 』══╗
-┃ 🎧 .earrape
-┃ 🎧 .deep
-┃ 🎧 .blown
-┃ 🎧 .bass
-┃ 🎧 .nightcore
-┃ 🎧 .fat
-┃ 🎧 .fast
-┃ 🎧 .robot
-┃ 🎧 .tupai
-┃ 🎧 .smooth
-┃ 🎧 .slow
-┃ 🎧 .reverse
-╚════════════════════════════╝
+👥 『 *𝗚𝗥𝗢𝗨𝗣 𝗖𝗢𝗡𝗧𝗥𝗢𝗟* 』
+❏ kickall
+❏ remove
+❏ tagall
+❏ hidetag
+❏ forward
+❏ getall
+❏ group open
+❏ group close
+❏ add
+❏ vcf
+❏ left
+❏ promoteall
+❏ demoteall
+❏ setdescription
+❏ linkgc
+❏ antilink
+❏ antilink2
+❏ antisticker
+❏ antispam
+❏ create
+❏ setname
+❏ promote
+❏ demote
+❏ groupinfo
+❏ balance
 
-╔══ 『 *REACTIONS* 』══╗
-┃ 😊 .bonk
-┃ 😊 .bully
-┃ 😊 .yeet
-┃ 😊 .slap
-┃ 😊 .nom
-┃ 😊 .poke
-┃ 😊 .awoo
-┃ 😊 .wave
-┃ 😊 .smile
-┃ 😊 .dance
-┃ 😊 .smug
-┃ 😊 .blush
-┃ 😊 .cringe
-┃ 😊 .sad
-┃ 😊 .happy
-┃ 😊 .shinobu
-┃ 😊 .cuddle
-┃ 😊 .glomp
-┃ 😊 .handhold
-┃ 😊 .highfive
-┃ 😊 .kick
-┃ 😊 .kill
-┃ 😊 .kiss
-┃ 😊 .cry
-┃ 😊 .bite
-┃ 😊 .lick
-┃ 😊 .pat
-┃ 😊 .hug
-╚════════════════════════════╝
+🔞 『 *𝗛𝗘𝗡𝗧𝗔𝗜* 』
+❏ hneko
+❏ trap
+❏ hwaifu
+❏ hentai
 
-╔════════════════════════════╗
-⚡ *POPKID TECH NEWSLETTER*
-╚════════════════════════════╝
+🎧 『 *𝗔𝗨𝗗𝗜𝗢 𝗘𝗙𝗙𝗘𝗖𝗧𝗦* 』
+❏ earrape
+❏ deep
+❏ blown
+❏ bass
+❏ nightcore
+❏ fat
+❏ fast
+❏ robot
+❏ tupai
+❏ smooth
+❏ slow
+❏ reverse
+
+💫 『 *𝗥𝗘𝗔𝗖𝗧𝗜𝗢𝗡𝗦* 』
+❏ bonk
+❏ bully
+❏ yeet
+❏ slap
+❏ nom
+❏ poke
+❏ awoo
+❏ wave
+❏ smile
+❏ dance
+❏ smug
+❏ blush
+❏ cringe
+❏ sad
+❏ happy
+❏ shinobu
+❏ cuddle
+❏ glomp
+❏ handhold
+❏ highfive
+❏ kick
+❏ kill
+❏ kiss
+❏ cry
+❏ bite
+❏ lick
+❏ pat
+❏ hug
+
+━━━━━━━━━━━━━━━━━━
+⚡ *POPᴋID GLE V2.0* ⚡
+━━━━━━━━━━━━━━━━━━
 `;
 
     await sock.sendMessage(m.from, {
