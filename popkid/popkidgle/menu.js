@@ -1,11 +1,14 @@
 import config from '../../config.cjs';
 
 const menu = async (m, sock) => {
+  if (!m.body) return; // Prevent crash if message has no body
+
   const prefix = config.PREFIX;
-  const cmd = m.body.startsWith(prefix)
-    ? m.body.slice(prefix.length).split(' ')[0].toLowerCase()
+  const rawBody = m.body || '';
+  const cmd = rawBody.startsWith(prefix)
+    ? rawBody.slice(prefix.length).split(' ')[0].toLowerCase()
     : '';
-  const text = m.body.slice(prefix.length + cmd.length).trim();
+  const text = rawBody.slice(prefix.length + cmd.length).trim();
 
   if (cmd === "menu") {
     const start = new Date().getTime();
@@ -19,7 +22,7 @@ const menu = async (m, sock) => {
     const seconds = Math.floor(uptimeSeconds % 60);
     const uptime = `${hours}h ${minutes}m ${seconds}s`;
 
-    // Profile Picture Fallback
+    // Default profile pic
     let profilePictureUrl = 'https://files.catbox.moe/ab8mf8.png';
     try {
       const controller = new AbortController();
@@ -248,9 +251,8 @@ const menu = async (m, sock) => {
 
 ━━━ ❖ ⚡ *POPᴋID GLE V2.0* ⚡ ❖ ━━━
 ✨ Innovating Chat, One Command at a Time ✨
-`.trim();
+    `.trim();
 
-    // Newsletter Context
     const newsletterContext = {
       forwardingScore: 999,
       isForwarded: true,
@@ -260,14 +262,13 @@ const menu = async (m, sock) => {
       }
     };
 
-    // Send Image Menu
     await sock.sendMessage(m.from, {
       image: { url: profilePictureUrl },
       caption: menuText,
       contextInfo: newsletterContext
     }, { quoted: m });
 
-    // 🎧 Random Songs
+    // 🔊 Optional: Play random Popkid audio drop
     const songUrls = [
       'https://files.catbox.moe/2b33jv.mp3',
       'https://files.catbox.moe/0cbqfa.mp3',
