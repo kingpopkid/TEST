@@ -46,7 +46,7 @@ const uptime = async (m, sock) => {
         externalAdReply: {
           title: "🔥 Bot Status - Popkid",
           body: `${greeting} | UPTIME: ${days}D ${hours}H ${minutes}M ${seconds}S`,
-          thumbnailUrl: "https://files.catbox.moe/u46hbi.jpg",
+          thumbnailUrl: "https://i.ibb.co/zhWGyVZL/file-00000000c6b0624388a556a5aa392449.png",
           sourceUrl: "https://whatsapp.com/channel/0029VbB6d0KKAwEdvcgqrH26",
           mediaType: 1,
           renderLargerThumbnail: true,
