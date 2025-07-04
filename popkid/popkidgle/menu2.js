@@ -1,199 +1,107 @@
 import config from '../../config.cjs';
+import { cmd } from '../command.js';
 
-const menu = async (m, sock) => {
-  const prefix = config.PREFIX;
-  const body = m.body || '';
-  const cmd = body.startsWith(prefix) ? body.slice(prefix.length).trim().split(' ')[0].toLowerCase() : body.trim();
-  const isNumberReply = /^[1-9]$/.test(cmd);
-
-  const newsletterContext = {
-    forwardingScore: 999,
-    isForwarded: true,
-    forwardedNewsletterMessageInfo: {
-      newsletterName: "Popkid-Gle",
-      newsletterJid: "120363420342566562@newsletter"
-    }
-  };
-
-  const categoryMenus = {
-    "1": `╭───[ 1️⃣ MAIN & BOT COMMANDS ]
-│ ${prefix}menu
-│ ${prefix}alive
-│ ${prefix}ping
-│ ${prefix}speed
-│ ${prefix}sudo
-│ ${prefix}dev
-│ ${prefix}addpremium
-╰────────────────────`,
-    "2": `╭───[ 2️⃣ OWNER COMMANDS ]
-│ ${prefix}restart
-│ ${prefix}join
-│ ${prefix}autoread
-│ ${prefix}block
-│ ${prefix}unblock
-│ ${prefix}setprefix
-│ ${prefix}repo
-╰────────────────────`,
-    "3": `╭───[ 3️⃣ AI & CHAT ]
-│ ${prefix}ai
-│ ${prefix}gpt
-│ ${prefix}chatbot
-│ ${prefix}gemini
-│ ${prefix}lydia
-│ ${prefix}popkid-ai
-╰────────────────────`,
-    "4": `╭───[ 4️⃣ SEARCH & TOOLS ]
-│ ${prefix}google
-│ ${prefix}ytsearch
-│ ${prefix}facebook
-│ ${prefix}instagram
-│ ${prefix}lyrics
-│ ${prefix}mediafire
-╰────────────────────`,
-    "5": `╭───[ 5️⃣ CONVERTERS & UTILITIES ]
-│ ${prefix}sticker
-│ ${prefix}mp3
-│ ${prefix}attp
-│ ${prefix}url
-│ ${prefix}shorten
-│ ${prefix}ss
-│ ${prefix}sessioncheck
-╰────────────────────`,
-    "6": `╭───[ 6️⃣ GROUP CONTROL ]
-│ ${prefix}tagall
-│ ${prefix}hidetag
-│ ${prefix}kick
-│ ${prefix}add
-│ ${prefix}group open
-│ ${prefix}group close
-│ ${prefix}antilink
-│ ${prefix}antidelete
-╰────────────────────`,
-    "7": `╭───[ 7️⃣ FUN, GAMES & REACTIONS ]
-│ ${prefix}flirt
-│ ${prefix}quizz
-│ ${prefix}anime
-│ ${prefix}ttt
-│ ${prefix}yesorno
-│ ${prefix}movie
-│ ${prefix}bonk
-│ ${prefix}smile
-│ ${prefix}hug
-│ ${prefix}kiss
-╰────────────────────`,
-    "8": `╭───[ 8️⃣ AUDIO FX & MUSIC ]
-│ ${prefix}bass
-│ ${prefix}earrape
-│ ${prefix}deep
-│ ${prefix}robot
-│ ${prefix}reverse
-│ ${prefix}nightcore
-╰────────────────────`,
-    "9": `╭───[ 9️⃣ HENTAI (18+) ]
-│ ${prefix}hneko
-│ ${prefix}hwaifu
-│ ${prefix}hentai
-│ ${prefix}trap
-╰────────────────────`
-  };
-
-  // i made the category for two days
-  if (
-    isNumberReply &&
-    m.quoted?.key.fromMe &&
-    m.quoted?.message?.imageMessage?.caption?.includes("REPLY WITH A NUMBER TO SEE A CATEGORY")
-  ) {
-    if (categoryMenus[cmd]) {
-      return await sock.sendMessage(
-        m.from,
-        {
-          text: categoryMenus[cmd],
-          contextInfo: newsletterContext,
-        },
-        { quoted: m }
-      );
-    } else {
-      return await sock.sendMessage(
-        m.from,
-        {
-          text: "❌ Invalid number. Please reply with a number from 1 to 9.",
-          contextInfo: newsletterContext,
-        },
-        { quoted: m }
-      );
-    }
-  }
-
-  // popkid menu2🖥️
-  if (cmd === "menu2") {
-    const start = new Date().getTime();
-    await m.React('⚡');
-    const end = new Date().getTime();
-    const responseTime = ((end - start) / 1000).toFixed(2);
-
-    const uptimeSeconds = process.uptime();
-    const hours = Math.floor(uptimeSeconds / 3600);
-    const minutes = Math.floor((uptimeSeconds % 3600) / 60);
-    const seconds = Math.floor(uptimeSeconds % 60);
-    const uptime = `${hours}h ${minutes}m ${seconds}s`;
-
-    let profilePictureUrl = 'https://files.catbox.moe/x18hgf.jpg';
-    try {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 1500);
-      const pp = await sock.profilePictureUrl(m.sender, 'image', { signal: controller.signal });
-      clearTimeout(timeout);
-      if (pp) profilePictureUrl = pp;
-    } catch (err) {
-      console.log("❌ Profile picture fetch failed.");
-    }
+cmd({
+  pattern: 'menu2',
+  desc: 'Stylish interactive menu with reply numbers',
+  category: 'menu',
+  filename: __filename
+}, async (conn, m, msg, { from, reply }) => {
+  try {
+    const userName = m.pushName || 'User';
 
     const mainMenu = `
-╔═⧉ 𝙿𝙾𝙿𝙺𝙸𝙳 𝙶𝙻𝙴 𝙼𝙴𝙽𝚄 ⧉═╗
-┃ 🧠 BOT: Popkid-GLE V2.0
-┃ ⚡ SPEED: ${responseTime}s
-┃ ⏱️ UPTIME: ${uptime}
-┃ 🌍 MODE: Public
-┃ 🔐 PREFIX: ${prefix}
-╚════════════════════╝
+┏━👾 𝗣𝗢𝗣𝗞𝗜𝗗-𝗚𝗟𝗘 𝗠𝗘𝗡𝗨 ━┓
+┃ Hello, *${userName}* 🪐
+┃ React with a number below:
+┃
+┃ 1️⃣ 𝗠𝗲𝗱𝗶𝗮 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗲𝗿𝘀
+┃ 2️⃣ 🤖 𝗔𝗜 & 𝗖𝗵𝗮𝘁𝗯𝗼𝘁𝘀
+┃ 3️⃣ 👥 𝗚𝗿𝗼𝘂𝗽 𝗠𝗮𝗻𝗮𝗴𝗲𝗺𝗲𝗻𝘁
+┃ 4️⃣ 👑 𝗢𝘄𝗻𝗲𝗿 𝗖𝗼𝗺𝗺𝗮𝗻𝗱𝘀
+┃ 5️⃣ ⚙️ 𝗕𝗼𝘁 𝗜𝗻𝗳𝗼 / 𝗨𝗽𝘁𝗶𝗺𝗲
+┗━━━━━━━━━━━━━━━━━━━
+📩 *Reply with a number to view commands*
+`.trim();
 
-💬 *REPLY WITH A NUMBER TO SEE A CATEGORY:*
+    await conn.sendMessage(from, { text: mainMenu }, { quoted: m });
 
-1️⃣ ┋ MAIN & BOT COMMANDS  
-2️⃣ ┋ OWNER COMMANDS  
-3️⃣ ┋ AI & CHAT  
-4️⃣ ┋ SEARCH & TOOLS  
-5️⃣ ┋ CONVERTERS & UTILITIES  
-6️⃣ ┋ GROUP CONTROL  
-7️⃣ ┋ FUN, GAMES & REACTIONS  
-8️⃣ ┋ AUDIO FX & MUSIC  
-9️⃣ ┋ HENTAI (18+)
+    // Wait for reply
+    conn.ev.once('messages.upsert', async ({ messages }) => {
+      const response = messages[0];
+      if (!response.message || response.key.fromMe || response.key.id !== m.key.id) return;
 
-━━━━━━━━━━━━━━
-⚡ *POPᴋID SYSTEM* ⚡
-━━━━━━━━━━━━━━`.trim();
+      const replyText = (response.message.conversation || '').trim();
 
-    await sock.sendMessage(m.from, {
-      image: { url: profilePictureUrl },
-      caption: mainMenu,
-      contextInfo: newsletterContext,
-    }, { quoted: m });
+      let section = '';
+      switch (replyText) {
+        case '1':
+          section = `
+🎬 *𝗠𝗲𝗱𝗶𝗮 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗲𝗿𝘀*
+- play [song name]
+- video [title]
+- mp3 [url]
+- mp4 [url]
+- tiktok
+- instagram
+- facebook
+          `.trim();
+          break;
+        case '2':
+          section = `
+🧠 *𝗔𝗜 & 𝗖𝗵𝗮𝘁 𝗧𝗼𝗼𝗹𝘀*
+- ai [prompt]
+- gemini [prompt]
+- chatbot on/off
+- bug
+- lydia
+- popkid-ai
+          `.trim();
+          break;
+        case '3':
+          section = `
+👥 *𝗚𝗿𝗼𝘂𝗽 𝗠𝗮𝗻𝗮𝗴𝗲𝗺𝗲𝗻𝘁*
+- tagall
+- hidetag
+- kick
+- promote
+- demote
+- group open/close
+- setname / setdesc
+          `.trim();
+          break;
+        case '4':
+          section = `
+👑 *𝗢𝘄𝗻𝗲𝗿 𝗖𝗼𝗻𝘁𝗿𝗼𝗹*
+- join
+- block / unblock
+- restart
+- setstatusmsg
+- alwaysonline
+- delete
+          `.trim();
+          break;
+        case '5':
+          section = `
+⚙️ *𝗕𝗼𝘁 𝗜𝗻𝗳𝗼 & 𝗧𝗼𝗼𝗹𝘀*
+- speed
+- uptime
+- alive
+- allvar
+- ping
+- repo
+          `.trim();
+          break;
+        default:
+          section = '❌ Invalid input. Please reply with a valid number like 1, 2, or 3.';
+          break;
+      }
 
-    const songUrls = [
-      'https://files.catbox.moe/2b33jv.mp3',
-      'https://files.catbox.moe/0cbqfa.mp3',
-      'https://files.catbox.moe/j4ids2.mp3',
-      'https://files.catbox.moe/vv2qla.mp3'
-    ];
-    const random = songUrls[Math.floor(Math.random() * songUrls.length)];
+      await conn.sendMessage(from, { text: section }, { quoted: response });
+    });
 
-    await sock.sendMessage(m.from, {
-      audio: { url: random },
-      mimetype: 'audio/mpeg',
-      ptt: false,
-      contextInfo: newsletterContext
-    }, { quoted: m });
+  } catch (err) {
+    console.error('❌ Menu2 Error:', err);
+    await reply('⚠️ Error loading interactive menu.');
   }
-};
-
-export default menu;
+});
