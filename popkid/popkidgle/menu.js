@@ -42,7 +42,7 @@ const menu = async (m, sock) => {
 ┃ 🆙 Ver.  : 2.0.0
 ┃ 🔧 Prefix: ${prefix}
 ┃ 👑 Owner : ${ownerName}
-╚══════════════════════╝
+╚════════════════════╝
 
 ╔═『 *🌟 MAIN MENU* 』═╗
 ┃ ⏺️ .menu
@@ -150,7 +150,7 @@ const menu = async (m, sock) => {
 ┃ 🎧 .smooth
 ┃ 🎧 .slow
 ┃ 🎧 .reverse
-╚════════════════════╝
+╚══════════════════╝
 
 ╔═『 *😊 REACTIONS* 』══╗
 ┃ 😊 .bonk
