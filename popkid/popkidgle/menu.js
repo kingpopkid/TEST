@@ -20,7 +20,7 @@ const menu = async (m, sock) => {
     const uptime = `${hours}h ${minutes}m ${seconds}s`;
 
     // Profile Picture Fallback
-    let profilePictureUrl = 'https://i.ibb.co/zhWGyVZL/file-00000000c6b0624388a556a5aa392449.png'';
+    let profilePictureUrl = 'https://url.bwmxmd.online/Adams.9hran8c5.png;
     try {
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 1500);
@@ -42,132 +42,209 @@ const menu = async (m, sock) => {
 ┃ 👑 *Owner:* Popkid Tech
 ╚═════════════════════╝
 
-▌📁 𝗠𝗔𝗜𝗡 𝗖𝗢𝗠𝗠𝗔𝗡𝗗𝗦
-├─ ❯ ${prefix}menu
-├─ ❯ ${prefix}bugmenu
-├─ ❯ ${prefix}speed
-├─ ❯ ${prefix}alive
-├─ ❯ ${prefix}sudo
-├─ ❯ ${prefix}addpremium
-├─ ❯ ${prefix}allvar
-├─ ❯ ${prefix}ping
-├─ ❯ ${prefix}owner
+🌟 *Welcome to your Popkid-powered command hub!* 🌟
 
-▌🛠️ 𝗢𝗪𝗡𝗘𝗥 𝗣𝗔𝗡𝗘𝗟
-├─ ❯ ${prefix}join
-├─ ❯ ${prefix}autoread
-├─ ❯ ${prefix}pair
-├─ ❯ ${prefix}leave
-├─ ❯ ${prefix}autostatusview
-├─ ❯ ${prefix}autotyping
-├─ ❯ ${prefix}autoblock
-├─ ❯ ${prefix}autorecording
-├─ ❯ ${prefix}autosticker
-├─ ❯ ${prefix}restart
-├─ ❯ ${prefix}block
-├─ ❯ ${prefix}unblock
-├─ ❯ ${prefix}anticall
-├─ ❯ ${prefix}antidelete
-├─ ❯ ${prefix}upload
-├─ ❯ ${prefix}delete
-├─ ❯ ${prefix}allcmds
-├─ ❯ ${prefix}alwaysonline
-├─ ❯ ${prefix}vv
-├─ ❯ ${prefix}vv2
-├─ ❯ ${prefix}setprefix
-├─ ❯ ${prefix}setownername
+╭─❖ 🔰 *MAIN MENU* ❖─╮
+│ 🧭 menu  
+│ ⚙️ bugmenu  
+│ 🚀 speed  
+│ 📡 alive  
+│ 🧑‍💻 sudo  
+│ 💎 addpremium  
+│ 🧪 dev  
+│ 🧾 allvar  
+│ 📍 ping  
+│ 👑 owner  
+╰────────────────╯
 
-▌💬 𝗔𝗜 𝗠𝗢𝗗𝗨𝗟𝗘𝗦
-├─ ❯ ${prefix}ai
-├─ ❯ ${prefix}bot
-├─ ❯ ${prefix}gemini
-├─ ❯ ${prefix}chatbot
-├─ ❯ ${prefix}gpt
-├─ ❯ ${prefix}lydia
-├─ ❯ ${prefix}popkid-ai
+╭─❖ 👑 *OWNER COMMANDS* ❖─╮
+│ 📥 join  
+│ 👁️ autoread  
+│ ⚙️ pair  
+│ ❌ leave  
+│ 📝 autostatusview  
+│ ⌨️ autotyping  
+│ 🔒 autoblock  
+│ 🎥 autorecording  
+│ 🌟 autosticker  
+│ 🚫 antisticker  
+│ 🔁 restart  
+│ ❌ block  
+│ ✅ unblock  
+│ 📵 anticall  
+│ 🗑️ antidelete  
+│ ☁️ upload  
+│ ⚙️ vv  
+│ ✏️ setstatusmsg  
+│ 🔐 allcmds  
+│ 📉 calculater  
+│ 🔄 alwaysonline  
+│ 🗑️ delete  
+│ 📊 vv2  
+│ 💬 setprefix  
+│ 🧑‍💼 setownername  
+│ 👤 profile  
+│ 🧾 repo  
+╰─────────────────────╯
 
-▌🎨 𝗖𝗢𝗡𝗩𝗘𝗥𝗧𝗘𝗥𝗦
-├─ ❯ ${prefix}attp
-├─ ❯ ${prefix}sticker
-├─ ❯ ${prefix}take
-├─ ❯ ${prefix}gimage
-├─ ❯ ${prefix}mp3
-├─ ❯ ${prefix}ss
-├─ ❯ ${prefix}fancy
-├─ ❯ ${prefix}url
-├─ ❯ ${prefix}url2
-├─ ❯ ${prefix}shorten
+╭─❖ 🧠 *AI & CHAT* ❖─╮
+│ 🤖 ai  
+│ 🐞 bug  
+│ 🧠 bot  
+│ ❗ report  
+│ 🌐 gemini  
+│ 💬 chatbot  
+│ 🧪 gpt  
+│ 🤖 lydia  
+│ 🌟 popkid-ai  
+╰────────────────╯
 
-▌🔍 𝗧𝗢𝗢𝗟𝗦 & 𝗦𝗘𝗔𝗥𝗖𝗛
-├─ ❯ ${prefix}google
-├─ ❯ ${prefix}bing
-├─ ❯ ${prefix}facebook
-├─ ❯ ${prefix}instagram
-├─ ❯ ${prefix}tiktok
-├─ ❯ ${prefix}ytsearch
-├─ ❯ ${prefix}mediafire
-├─ ❯ ${prefix}lyrics
-├─ ❯ ${prefix}githubstalk
-├─ ❯ ${prefix}imdb
-├─ ❯ ${prefix}playstore
-├─ ❯ ${prefix}shazam
+╭─❖ 🎨 *CONVERTERS* ❖─╮
+│ 🛡️ security  
+│ 💼 sessioncheck  
+│ 🔒 blockunknown  
+│ 🔁 autoblock  
+│ 🖥️ host  
+│ 🚫 antispam  
+│ ⚔️ antibugs  
+│ 🖋️ attp  
+│ 🖼️ gimage  
+│ 🎵 mp3  
+│ 📸 ss  
+│ ✨ fancy  
+│ 🔗 url  
+│ 🔗 url2  
+│ 📉 shorten  
+│ 🪄 sticker  
+│ 🧷 take  
+╰────────────────╯
 
-▌🎮 𝗙𝗨𝗡 & 𝗚𝗔𝗠𝗘𝗦
-├─ ❯ ${prefix}joke
-├─ ❯ ${prefix}ttt
-├─ ❯ ${prefix}connect4
-├─ ❯ ${prefix}flirt
-├─ ❯ ${prefix}roast
-├─ ❯ ${prefix}rank
-├─ ❯ ${prefix}poll
-├─ ❯ ${prefix}quizz
-├─ ❯ ${prefix}anime
-├─ ❯ ${prefix}tempmail
-├─ ❯ ${prefix}toqr
-├─ ❯ ${prefix}score
+╭─❖ 🔍 *SEARCH & TOOLS* ❖─╮
+│ 🌐 google  
+│ 📁 mediafire  
+│ 🕋 quranvideo  
+│ 🕋 quraimage  
+│ 📘 facebook  
+│ 📸 instagram  
+│ 🎶 tiktok  
+│ 📄 lyrics  
+│ 🔍 ytsearch  
+│ 🧩 app  
+│ 💻 bing  
+│ 🕵️ ipstalk  
+│ 🎥 imdb  
+│ 📌 pinterest  
+│ 🐱 githubstalk  
+│ 🖼️ image  
+│ 📱 ringtone  
+│ 🏪 playstore  
+│ 🎧 shazam  
+╰────────────────────╯
 
-▌👥 𝗚𝗥𝗢𝗨𝗣 𝗠𝗔𝗡𝗔𝗚𝗘𝗠𝗘𝗡𝗧
-├─ ❯ ${prefix}kickall
-├─ ❯ ${prefix}remove
-├─ ❯ ${prefix}tagall
-├─ ❯ ${prefix}hidetag
-├─ ❯ ${prefix}promote
-├─ ❯ ${prefix}demote
-├─ ❯ ${prefix}antilink
-├─ ❯ ${prefix}antispam
-├─ ❯ ${prefix}groupopen
-├─ ❯ ${prefix}groupclose
-├─ ❯ ${prefix}vcf
-├─ ❯ ${prefix}linkgc
-├─ ❯ ${prefix}setname
+╭─❖ 🎮 *FUN & GAMES* ❖─╮
+│ 📸 getpp  
+│ 👤 avatar  
+│ 🎯 wcg  
+│ 😂 joke  
+│ ❌⭕ ttt  
+│ 🤔 yesorno  
+│ 🧩 connect4  
+│ 🥇 rank  
+│ 🧠 quizz  
+│ 🎬 movie  
+│ 😍 flirt  
+│ 📜 givetext  
+│ 🔥 roast  
+│ 🧃 anime  
+│ 👤 profile  
+│ 🧮 ebinary  
+│ 📦 fetch  
+│ 🎨 qc  
+│ 💕 couple  
+│ 📊 poll  
+│ 📈 score  
+│ 🔳 toqr  
+│ 📧 tempmail  
+╰────────────────╯
 
-▌🔞 𝗛𝗘𝗡𝗧𝗔𝗜 𝗭𝗢𝗡𝗘
-├─ ❯ ${prefix}hneko
-├─ ❯ ${prefix}hwaifu
-├─ ❯ ${prefix}trap
-├─ ❯ ${prefix}hentai
+╭─❖ 👥 *GROUP CONTROL* ❖─╮
+│ ❌ kickall  
+│ 🚫 remove  
+│ 🏷️ tagall  
+│ 👻 hidetag  
+│ 🔁 forward  
+│ 👥 getall  
+│ 🟢 group open  
+│ 🔴 group close  
+│ ➕ add  
+│ 📇 vcf  
+│ 🔚 left  
+│ ⬆️ promote  
+│ ⬇️ demote  
+│ 📝 setdescription  
+│ 🔗 linkgc  
+│ 🚫 antilink  
+│ 🚫 antilink2  
+│ 🛡️ antisticker  
+│ 🚫 antispam  
+│ 🆕 create  
+│ ✏️ setname  
+│ 📊 groupinfo  
+│ 💰 balance  
+╰────────────────────╯
 
-▌🎧 𝗔𝗨𝗗𝗜𝗢 𝗘𝗙𝗙𝗘𝗖𝗧𝗦
-├─ ❯ ${prefix}earrape
-├─ ❯ ${prefix}deep
-├─ ❯ ${prefix}bass
-├─ ❯ ${prefix}blown
-├─ ❯ ${prefix}nightcore
-├─ ❯ ${prefix}robot
-├─ ❯ ${prefix}reverse
-├─ ❯ ${prefix}smooth
-├─ ❯ ${prefix}slow
+╭─❖ 🔞 *HENTAI ZONE* ❖─╮
+│ 🍑 hneko  
+│ 🧢 trap  
+│ 👧 hwaifu  
+│ 🔞 hentai  
+╰────────────────╯
 
-▌💫 𝗥𝗘𝗔𝗖𝗧𝗜𝗢𝗡𝗦
-├─ ❯ ${prefix}bonk
-├─ ❯ ${prefix}slap
-├─ ❯ ${prefix}hug
-├─ ❯ ${prefix}smile
-├─ ❯ ${prefix}wave
-├─ ❯ ${prefix}poke
-├─ ❯ ${prefix}cry
-├─ ❯ ${prefix}kiss
-├─ ❯ ${prefix}lick
+╭─❖ 🎧 *AUDIO FX* ❖─╮
+│ 💥 earrape  
+│ 🎚️ deep  
+│ 💨 blown  
+│ 🔊 bass  
+│ 🌙 nightcore  
+│ 🍔 fat  
+│ ⚡ fast  
+│ 🤖 robot  
+│ 🐿️ tupai  
+│ 🎵 smooth  
+│ 🐢 slow  
+│ 🔁 reverse  
+╰────────────────╯
+
+╭─❖ 💫 *REACTIONS* ❖─╮
+│ 🪓 bonk  
+│ 👊 bully  
+│ 🚀 yeet  
+│ ✋ slap  
+│ 🍽️ nom  
+│ 👉 poke  
+│ 🐺 awoo  
+│ 👋 wave  
+│ 😊 smile  
+│ 💃 dance  
+│ 😏 smug  
+│ 😳 blush  
+│ 😬 cringe  
+│ 😢 sad  
+│ 😃 happy  
+│ 🍵 shinobu  
+│ 🤗 cuddle  
+│ 🤸 glomp  
+│ ✋ handhold  
+│ 🙌 highfive  
+│ 👢 kick  
+│ 🔪 kill  
+│ 😘 kiss  
+│ 😭 cry  
+│ 😬 bite  
+│ 👅 lick  
+│ 🫴 pat  
+│ 🤗 hug  
+╰────────────────╯
 
 ╔═❖ 「 *𝗣𝗢𝗣𝗞𝗜𝗗-𝗫𝗗 𝗕𝗢𝗧* ❖═╗
      🫶❤️🥱💜🥱❣️🪴🦋❤️
