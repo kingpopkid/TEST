@@ -1,288 +1,203 @@
 import config from '../../config.cjs';
 
+const startTime = Date.now();
+
+const formatRuntime = (ms) => {
+  const totalSeconds = Math.floor(ms / 1000);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+  return `${hours}h ${minutes}m ${seconds}s`;
+};
+
 const menu = async (m, sock) => {
   const prefix = config.PREFIX;
-  const cmd = m.body.startsWith(prefix)
-    ? m.body.slice(prefix.length).split(' ')[0].toLowerCase()
-    : '';
-  const text = m.body.slice(prefix.length + cmd.length).trim();
+  const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
 
   if (cmd === "menu") {
     const start = new Date().getTime();
-    await m.React('✨');
+    await m.React('🪆');
     const end = new Date().getTime();
-    const responseTime = ((end - start) / 1000).toFixed(2);
+    const responseTime = (end - start) / 1000;
 
-    const uptimeSeconds = process.uptime();
-    const hours = Math.floor(uptimeSeconds / 3600);
-    const minutes = Math.floor((uptimeSeconds % 3600) / 60);
-    const seconds = Math.floor(uptimeSeconds % 60);
-    const uptime = `${hours}h ${minutes}m ${seconds}s`;
+    const runtime = formatRuntime(Date.now() - startTime);
+    const mode = m.isGroup ? "public" : "private";
+    const ownerName = config.OWNER_NAME || "POPKID";
 
-    // Profile Picture Fallback
-    let profilePictureUrl = 'https://url.bwmxmd.online/Adams.9hran8c5.png;
+    let profilePictureUrl = 'https://files.catbox.moe/e1k73u.jpg'; // Default
     try {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 1500);
-      const pp = await sock.profilePictureUrl(m.sender, 'image', { signal: controller.signal });
-      clearTimeout(timeout);
+      const pp = await sock.profilePictureUrl(m.sender, 'image');
       if (pp) profilePictureUrl = pp;
-    } catch {
-      console.log('🖼️ Failed to fetch profile pic.');
+    } catch (err) {
+      console.error("Error fetching profile picture:", err);
     }
 
     const menuText = `
-╔═❖ 「 *𝗣𝗢𝗣𝗞𝗜𝗗-𝗫𝗗 𝗕𝗢𝗧* 」❖═╗
-┃ 🤖 *Name:* Popkid-XD
-┃ 🔧 *Version:* 2.0.0
-┃ 📡 *Mode:* Public
-┃ ⚡ *Speed:* ${responseTime}s
-┃ ⏱️ *Uptime:* ${uptime}
-┃ 🧩 *Prefix:* ${prefix}
-┃ 👑 *Owner:* Popkid Tech
-╚═════════════════════╝
+╔════ ⬡  *POPKID-XD V2*  ⬡ ════╗
+┃ 🧠 *Developer:* Popkid KE
+┃ 🤖 *Bot Name:* Popkid-XD
+┃ ⚡ *Runtime:* ${runtime}
+┃ 🌐 *Mode:* ${mode}
+┃ 🆙 *Version:* 2.0.0
+┃ 🔧 *Prefix:* ${prefix}
+┃ 👑 *Owner:* ${ownerName}
+╚════════════════════════════╝
 
-🌟 *Welcome to your Popkid-powered command hub!* 🌟
+╔═══ 『 *MAIN MENU* 』═══╗
+┃ ⏺️ .menu
+┃ ⏺️ .speed
+┃ ⏺️ .alive
+┃ ⏺️ .bugmenu
+┃ ⏺️ .owner
+┃ ⏺️ .allcmds
+┃ ⏺️ .addpremium
+┃ ⏺️ .repo
+┃ ⏺️ .dev
+┃ ⏺️ .ping
+┃ ⏺️ .version
+╚════════════════════════════╝
 
-╭─❖ 🔰 *MAIN MENU* ❖─╮
-│ 🧭 menu  
-│ ⚙️ bugmenu  
-│ 🚀 speed  
-│ 📡 alive  
-│ 🧑‍💻 sudo  
-│ 💎 addpremium  
-│ 🧪 dev  
-│ 🧾 allvar  
-│ 📍 ping  
-│ 👑 owner  
-╰────────────────╯
+╔═══ 『 *OWNER ZONE* 』═══╗
+┃ 👑 .join
+┃ 👑 .autoread
+┃ 👑 .pair
+┃ 👑 .leave
+┃ 👑 .jid
+┃ 👑 .autoblock
+┃ 👑 .statusreply
+┃ 👑 .restart
+┃ 👑 .host
+┃ 👑 .upload
+┃ 👑 .vv
+┃ 👑 .alwaysonline
+┃ 👑 .block
+┃ 👑 .unblock
+┃ 👑 .setstatusmsg
+┃ 👑 .setprefix
+┃ 👑 .setownername
+╚════════════════════════════╝
 
-╭─❖ 👑 *OWNER COMMANDS* ❖─╮
-│ 📥 join  
-│ 👁️ autoread  
-│ ⚙️ pair  
-│ ❌ leave  
-│ 📝 autostatusview  
-│ ⌨️ autotyping  
-│ 🔒 autoblock  
-│ 🎥 autorecording  
-│ 🌟 autosticker  
-│ 🚫 antisticker  
-│ 🔁 restart  
-│ ❌ block  
-│ ✅ unblock  
-│ 📵 anticall  
-│ 🗑️ antidelete  
-│ ☁️ upload  
-│ ⚙️ vv  
-│ ✏️ setstatusmsg  
-│ 🔐 allcmds  
-│ 📉 calculater  
-│ 🔄 alwaysonline  
-│ 🗑️ delete  
-│ 📊 vv2  
-│ 💬 setprefix  
-│ 🧑‍💼 setownername  
-│ 👤 profile  
-│ 🧾 repo  
-╰─────────────────────╯
+╔═══ 『 *AI SECTION* 』═══╗
+┃ 🤖 .ai
+┃ 🤖 .gpt
+┃ 🤖 .lydia
+┃ 🤖 .gemini
+┃ 🤖 .chatbot
+╚════════════════════════════╝
 
-╭─❖ 🧠 *AI & CHAT* ❖─╮
-│ 🤖 ai  
-│ 🐞 bug  
-│ 🧠 bot  
-│ ❗ report  
-│ 🌐 gemini  
-│ 💬 chatbot  
-│ 🧪 gpt  
-│ 🤖 lydia  
-│ 🌟 popkid-ai  
-╰────────────────╯
+╔══ 『 *CONVERTERS* 』══╗
+┃ 🎨 .attp
+┃ 🎨 .sticker
+┃ 🎨 .take
+┃ 🎨 .mp3
+┃ 🎨 .ss
+┃ 🎨 .shorten
+╚════════════════════════════╝
 
-╭─❖ 🎨 *CONVERTERS* ❖─╮
-│ 🛡️ security  
-│ 💼 sessioncheck  
-│ 🔒 blockunknown  
-│ 🔁 autoblock  
-│ 🖥️ host  
-│ 🚫 antispam  
-│ ⚔️ antibugs  
-│ 🖋️ attp  
-│ 🖼️ gimage  
-│ 🎵 mp3  
-│ 📸 ss  
-│ ✨ fancy  
-│ 🔗 url  
-│ 🔗 url2  
-│ 📉 shorten  
-│ 🪄 sticker  
-│ 🧷 take  
-╰────────────────╯
+╔══ 『 *SEARCH ENGINE* 』══╗
+┃ 🔍 .play
+┃ 🔍 .video
+┃ 🔍 .song
+┃ 🔍 .ytsearch
+┃ 🔍 .mediafire
+┃ 🔍 .facebook
+┃ 🔍 .instagram
+┃ 🔍 .tiktok
+┃ 🔍 .githubstalk
+┃ 🔍 .lyrics
+┃ 🔍 .app
+┃ 🔍 .pinterest
+┃ 🔍 .imdb
+┃ 🔍 .ipstalk
+╚════════════════════════════╝
 
-╭─❖ 🔍 *SEARCH & TOOLS* ❖─╮
-│ 🌐 google  
-│ 📁 mediafire  
-│ 🕋 quranvideo  
-│ 🕋 quraimage  
-│ 📘 facebook  
-│ 📸 instagram  
-│ 🎶 tiktok  
-│ 📄 lyrics  
-│ 🔍 ytsearch  
-│ 🧩 app  
-│ 💻 bing  
-│ 🕵️ ipstalk  
-│ 🎥 imdb  
-│ 📌 pinterest  
-│ 🐱 githubstalk  
-│ 🖼️ image  
-│ 📱 ringtone  
-│ 🏪 playstore  
-│ 🎧 shazam  
-╰────────────────────╯
+╔══ 『 *GROUP CONTROLS* 』══╗
+┃ 👥 .kickall
+┃ 👥 .remove
+┃ 👥 .tagall
+┃ 👥 .hidetag
+┃ 👥 .group open
+┃ 👥 .group close
+┃ 👥 .add
+┃ 👥 .vcf
+┃ 👥 .left
+┃ 👥 .promoteall
+┃ 👥 .demoteall
+┃ 👥 .setdescription
+┃ 👥 .linkgc
+┃ 👥 .antilink
+┃ 👥 .antisticker
+┃ 👥 .antispam
+┃ 👥 .create
+┃ 👥 .setname
+┃ 👥 .promote
+┃ 👥 .demote
+┃ 👥 .groupinfo
+┃ 👥 .balance
+╚════════════════════════════╝
 
-╭─❖ 🎮 *FUN & GAMES* ❖─╮
-│ 📸 getpp  
-│ 👤 avatar  
-│ 🎯 wcg  
-│ 😂 joke  
-│ ❌⭕ ttt  
-│ 🤔 yesorno  
-│ 🧩 connect4  
-│ 🥇 rank  
-│ 🧠 quizz  
-│ 🎬 movie  
-│ 😍 flirt  
-│ 📜 givetext  
-│ 🔥 roast  
-│ 🧃 anime  
-│ 👤 profile  
-│ 🧮 ebinary  
-│ 📦 fetch  
-│ 🎨 qc  
-│ 💕 couple  
-│ 📊 poll  
-│ 📈 score  
-│ 🔳 toqr  
-│ 📧 tempmail  
-╰────────────────╯
+╔══ 『 *AUDIO EFFECTS* 』══╗
+┃ 🎧 .earrape
+┃ 🎧 .deep
+┃ 🎧 .blown
+┃ 🎧 .bass
+┃ 🎧 .nightcore
+┃ 🎧 .fat
+┃ 🎧 .fast
+┃ 🎧 .robot
+┃ 🎧 .tupai
+┃ 🎧 .smooth
+┃ 🎧 .slow
+┃ 🎧 .reverse
+╚════════════════════════════╝
 
-╭─❖ 👥 *GROUP CONTROL* ❖─╮
-│ ❌ kickall  
-│ 🚫 remove  
-│ 🏷️ tagall  
-│ 👻 hidetag  
-│ 🔁 forward  
-│ 👥 getall  
-│ 🟢 group open  
-│ 🔴 group close  
-│ ➕ add  
-│ 📇 vcf  
-│ 🔚 left  
-│ ⬆️ promote  
-│ ⬇️ demote  
-│ 📝 setdescription  
-│ 🔗 linkgc  
-│ 🚫 antilink  
-│ 🚫 antilink2  
-│ 🛡️ antisticker  
-│ 🚫 antispam  
-│ 🆕 create  
-│ ✏️ setname  
-│ 📊 groupinfo  
-│ 💰 balance  
-╰────────────────────╯
+╔══ 『 *REACTIONS* 』══╗
+┃ 😊 .bonk
+┃ 😊 .bully
+┃ 😊 .yeet
+┃ 😊 .slap
+┃ 😊 .nom
+┃ 😊 .poke
+┃ 😊 .awoo
+┃ 😊 .wave
+┃ 😊 .smile
+┃ 😊 .dance
+┃ 😊 .smug
+┃ 😊 .blush
+┃ 😊 .cringe
+┃ 😊 .sad
+┃ 😊 .happy
+┃ 😊 .shinobu
+┃ 😊 .cuddle
+┃ 😊 .glomp
+┃ 😊 .handhold
+┃ 😊 .highfive
+┃ 😊 .kick
+┃ 😊 .kill
+┃ 😊 .kiss
+┃ 😊 .cry
+┃ 😊 .bite
+┃ 😊 .lick
+┃ 😊 .pat
+┃ 😊 .hug
+╚════════════════════════════╝
 
-╭─❖ 🔞 *HENTAI ZONE* ❖─╮
-│ 🍑 hneko  
-│ 🧢 trap  
-│ 👧 hwaifu  
-│ 🔞 hentai  
-╰────────────────╯
+╔════════════════════════════╗
+⚡ *POPKID TECH NEWSLETTER*
+╚════════════════════════════╝
+`;
 
-╭─❖ 🎧 *AUDIO FX* ❖─╮
-│ 💥 earrape  
-│ 🎚️ deep  
-│ 💨 blown  
-│ 🔊 bass  
-│ 🌙 nightcore  
-│ 🍔 fat  
-│ ⚡ fast  
-│ 🤖 robot  
-│ 🐿️ tupai  
-│ 🎵 smooth  
-│ 🐢 slow  
-│ 🔁 reverse  
-╰────────────────╯
-
-╭─❖ 💫 *REACTIONS* ❖─╮
-│ 🪓 bonk  
-│ 👊 bully  
-│ 🚀 yeet  
-│ ✋ slap  
-│ 🍽️ nom  
-│ 👉 poke  
-│ 🐺 awoo  
-│ 👋 wave  
-│ 😊 smile  
-│ 💃 dance  
-│ 😏 smug  
-│ 😳 blush  
-│ 😬 cringe  
-│ 😢 sad  
-│ 😃 happy  
-│ 🍵 shinobu  
-│ 🤗 cuddle  
-│ 🤸 glomp  
-│ ✋ handhold  
-│ 🙌 highfive  
-│ 👢 kick  
-│ 🔪 kill  
-│ 😘 kiss  
-│ 😭 cry  
-│ 😬 bite  
-│ 👅 lick  
-│ 🫴 pat  
-│ 🤗 hug  
-╰────────────────╯
-
-╔═❖ 「 *𝗣𝗢𝗣𝗞𝗜𝗗-𝗫𝗗 𝗕𝗢𝗧* ❖═╗
-     🫶❤️🥱💜🥱❣️🪴🦋❤️
-           |••••••••••••••••••••••••|
-╚══════════════════╝
-`.trim();
-
-    // Newsletter Context
-    const newsletterContext = {
-      forwardingScore: 999,
-      isForwarded: true,
-      forwardedNewsletterMessageInfo: {
-        newsletterName: "Popkid-Gle",
-        newsletterJid: "120363420342566562@newsletter"
-      }
-    };
-
-    // Send Image Menu
     await sock.sendMessage(m.from, {
       image: { url: profilePictureUrl },
-      caption: menuText,
-      contextInfo: newsletterContext
-    }, { quoted: m });
-
-    // 🎧 Random Songs
-    const songUrls = [
-      'https://url.bwmxmd.online/Adams.o0d0aj8e.mp3',
-      'https://url.bwmxmd.online/Adams.o0d0aj8e.mp3',
-      'https://url.bwmxmd.online/Adams.o0d0aj8e.mp3',
-      'https://url.bwmxmd.online/Adams.o0d0aj8e.mp3'
-    ];
-    const randomSong = songUrls[Math.floor(Math.random() * songUrls.length)];
-
-    await sock.sendMessage(m.from, {
-      audio: { url: randomSong },
-      mimetype: 'audio/mpeg',
-      ptt: false,
-      contextInfo: newsletterContext
+      caption: menuText.trim(),
+      contextInfo: {
+        forwardingScore: 5,
+        isForwarded: true,
+        forwardedNewsletterMessageInfo: {
+          newsletterName: "POPKID TECH",
+          newsletterJid: "120363420342566562@newsletter"
+        }
+      }
     }, { quoted: m });
   }
 };
