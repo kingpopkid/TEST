@@ -1,5 +1,4 @@
 import config from '../../config.cjs';
-import { runtime } from '../lib/functions.js';
 
 const menu = async (m, sock) => {
   const prefix = config.PREFIX;
@@ -9,13 +8,30 @@ const menu = async (m, sock) => {
   const text = m.body.slice(prefix.length + cmd.length).trim();
 
   if (cmd === "menu") {
-    const start = Date.now();
-    await m.react('🧠');
-    const end = Date.now();
+    const start = new Date().getTime();
+    await m.React('✨');
+    const end = new Date().getTime();
     const responseTime = ((end - start) / 1000).toFixed(2);
-    const uptime = runtime(process.uptime());
 
-    const menuMessage = `
+    const uptimeSeconds = process.uptime();
+    const hours = Math.floor(uptimeSeconds / 3600);
+    const minutes = Math.floor((uptimeSeconds % 3600) / 60);
+    const seconds = Math.floor(uptimeSeconds % 60);
+    const uptime = `${hours}h ${minutes}m ${seconds}s`;
+
+    // Profile Picture Fallback
+    let profilePictureUrl = 'https://i.ibb.co/zhWGyVZL/file-00000000c6b0624388a556a5aa392449.png'';
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 1500);
+      const pp = await sock.profilePictureUrl(m.sender, 'image', { signal: controller.signal });
+      clearTimeout(timeout);
+      if (pp) profilePictureUrl = pp;
+    } catch {
+      console.log('🖼️ Failed to fetch profile pic.');
+    }
+
+    const menuText = `
 ╔═❖ 「 *𝗣𝗢𝗣𝗞𝗜𝗗-𝗫𝗗 𝗕𝗢𝗧* 」❖═╗
 ┃ 🤖 *Name:* Popkid-XD
 ┃ 🔧 *Version:* 2.0.0
@@ -157,12 +173,39 @@ const menu = async (m, sock) => {
      🫶❤️🥱💜🥱❣️🪴🦋❤️
            |••••••••••••••••••••••••|
 ╚══════════════════╝
-    `.trim();
+`.trim();
 
-    // Send menu as image with caption
+    // Newsletter Context
+    const newsletterContext = {
+      forwardingScore: 999,
+      isForwarded: true,
+      forwardedNewsletterMessageInfo: {
+        newsletterName: "Popkid-Gle",
+        newsletterJid: "120363420342566562@newsletter"
+      }
+    };
+
+    // Send Image Menu
     await sock.sendMessage(m.from, {
-      image: { url: 'https://i.ibb.co/zhWGyVZL/file-00000000c6b0624388a556a5aa392449.png' }, // Replace with your preferred banner/image URL
-      caption: menuMessage
+      image: { url: profilePictureUrl },
+      caption: menuText,
+      contextInfo: newsletterContext
+    }, { quoted: m });
+
+    // 🎧 Random Songs
+    const songUrls = [
+      'https://url.bwmxmd.online/Adams.o0d0aj8e.mp3',
+      'https://url.bwmxmd.online/Adams.o0d0aj8e.mp3',
+      'https://url.bwmxmd.online/Adams.o0d0aj8e.mp3',
+      'https://url.bwmxmd.online/Adams.o0d0aj8e.mp3'
+    ];
+    const randomSong = songUrls[Math.floor(Math.random() * songUrls.length)];
+
+    await sock.sendMessage(m.from, {
+      audio: { url: randomSong },
+      mimetype: 'audio/mpeg',
+      ptt: false,
+      contextInfo: newsletterContext
     }, { quoted: m });
   }
 };
